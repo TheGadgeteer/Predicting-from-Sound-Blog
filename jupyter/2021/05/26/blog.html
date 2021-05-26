@@ -137,9 +137,8 @@ window.onload = wrap_img;
 <a class="anchor" href="#Introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction<a class="anchor-link" href="#Introduction"> </a>
 </h2>
 <p>The objective of this project is to find ways of obtaining information from sounds using neural networks. Examples of such information include the source of a sound as well as the distance of the source to the microphone.
-To approach the detection of the sound source, we are constructing a neural network based on a submission <sup id="fnref-1" class="footnote-ref"><a href="#fn-1">1</a></sup> to the <a href="https://www.kaggle.com/c/freesound-audio-tagging/overview">Freesound General-Purpose Audio Tagging Challenge</a>, a competition with the goal of classifying audio files from a wide range of real-world environments.</p>
-<p></p>
-<div class="footnotes"><p id="fn-1">1. This is footnote<a href="#fnref-1" class="footnote footnotes">↩</a></p></div>
+To approach the detection of the sound source, we are constructing a neural network based on a submission <sup id="fnref-1" class="footnote-ref"><a href="#fn-1">1</a></sup>
+to the <a href="https://www.kaggle.com/c/freesound-audio-tagging/overview">Freesound General-Purpose Audio Tagging Challenge</a>, a competition with the goal of classifying audio files from a wide range of real-world environments.</p>
 
 </div>
 </div>
@@ -152,7 +151,7 @@ To approach the detection of the sound source, we are constructing a neural netw
 </h2>
 <p>As a dataset for testing and training, we are using the one provided for the 2018 Kaggle Freesound competition, which is downloadable <a href="https://www.kaggle.com/c/freesound-audio-tagging/data">here</a>.
 It contains sounds from 41 different categories such as trumpet or fireworks, with 9473 training examples and 1600 test examples. However the samples aren't distributed uniformly over the categories, meaning there's more data for some categories than for others. Also, the amount of manually verified samples varies from category to category.  This might cause the training to become more challenging.</p>
-<p><img src="/Predicting-from-Sound-Blog/images/copied_from_nb/kaggle_dataset_distribution.png" alt="" title="The dataset. As it can be seen, only a part of the samples has been manually verified (blue). The amount of samples and the rate of manually verified samples varies between the categories."></p>
+<p><img src="/Predicting-from-Sound-Blog/images/copied_from_nb/kaggle_dataset_distribution.png" alt="" title="The dataset. As it can be seen, only a part of the samples has been manually verified (blue). The amount of samples and the fraction of manually verified samples per category varies between the categories."></p>
 
 </div>
 </div>
@@ -475,7 +474,8 @@ Further investigation is needed in order to find ways to reduce this massive gap
 <h1 id="References">
 <a class="anchor" href="#References" aria-hidden="true"><span class="octicon octicon-link"></span></a>References<a class="anchor-link" href="#References"> </a>
 </h1>
-<p>[1] <a href="https://www.kaggle.com/fizzbuzz/beginner-s-guide-to-audio-data/data">https://www.kaggle.com/fizzbuzz/beginner-s-guide-to-audio-data/data</a></p>
+<p></p>
+<div class="footnotes"><p id="fn-1">1. <a href="https://www.kaggle.com/fizzbuzz/beginner-s-guide-to-audio-data/data">https://www.kaggle.com/fizzbuzz/beginner-s-guide-to-audio-data/data</a><a href="#fnref-1" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
