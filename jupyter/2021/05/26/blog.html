@@ -293,7 +293,6 @@ It contains sounds from 41 different categories such as trumpet or fireworks, wi
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">X_train</span> <span class="o">=</span> <span class="n">prepare_data</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="s1">'drive/MyDrive/datasets/FSDKaggle2018.audio_train/'</span><span class="p">)</span>
 <span class="n">X_test</span> <span class="o">=</span> <span class="n">prepare_data</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="s1">'drive/MyDrive/datasets/FSDKaggle2018.audio_test/'</span><span class="p">)</span>
-<span class="c1"># TODO:  what does this function to_categorical() do and where is it defined?</span>
 <span class="n">y_train</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">label_idx</span><span class="p">,</span> <span class="n">num_classes</span><span class="o">=</span><span class="n">n_classes</span><span class="p">)</span>
 
 <span class="c1"># normalize the data using the mean and deviation from the training set</span>
@@ -328,7 +327,19 @@ This structure is repeated 3 more times, then the model ends with a fully connec
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">getModel</span><span class="p">():</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sampling_rate</span><span class="o">=</span><span class="mi">16000</span>
+<span class="n">audio_duration</span><span class="o">=</span><span class="mi">2</span>
+<span class="n">n_classes</span><span class="o">=</span><span class="mi">41</span>
+<span class="n">n_folds_</span><span class="o">=</span><span class="mi">10</span>
+<span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.0001</span>
+<span class="n">max_epochs</span><span class="o">=</span><span class="mi">50</span>
+<span class="n">n_mfcc</span><span class="o">=</span><span class="mi">20</span>
+<span class="n">audio_length</span> <span class="o">=</span> <span class="n">sampling_rate</span> <span class="o">*</span> <span class="n">audio_duration</span>
+<span class="n">dim</span> <span class="o">=</span> <span class="p">(</span><span class="n">audio_length</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span>
+
+<span class="c1"># Generating and compiling the model</span>
+<span class="k">def</span> <span class="nf">getModel</span><span class="p">():</span>
     <span class="n">input_length</span> <span class="o">=</span> <span class="n">audio_length</span>
 
     <span class="n">inp</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">dim</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dim</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="mi">1</span><span class="p">))</span>
@@ -394,7 +405,6 @@ This structure is repeated 3 more times, then the model ends with a fully connec
 <span class="n">train</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"fname"</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">test</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"fname"</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="c1"># TODO: what does this do?</span>
 <span class="n">train</span><span class="p">[</span><span class="s2">"label_idx"</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">label_idx</span><span class="p">[</span><span class="n">x</span><span class="p">])</span>
 </pre></div>
 
@@ -408,7 +418,7 @@ This structure is repeated 3 more times, then the model ends with a fully connec
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Finally, we are training the network using KFold:</p>
+<p>Finally, we are training the network using KFold, which is a cross-validator that splits the data in train sets and test sets. For this, it divides the entire dataset in K folds. During training, one of these folds is used for validation, whereas the other k-1 folds are used as a training set. Aft</p>
 
 </div>
 </div>
@@ -475,7 +485,7 @@ Further investigation is needed in order to find ways to reduce this massive gap
 <a class="anchor" href="#References" aria-hidden="true"><span class="octicon octicon-link"></span></a>References<a class="anchor-link" href="#References"> </a>
 </h2>
 <p></p>
-<div class="footnotes"><p id="fn-1">1. <a href="https://www.kaggle.com/fizzbuzz/beginner-s-guide-to-audio-data/data">https://www.kaggle.com/fizzbuzz/beginner-s-guide-to-audio-data/data</a><a href="#fnref-1" class="footnote footnotes">↩</a></p></div>
+<div class="footnotes"><p id="fn-1">1. <a href="https://www.kaggle.com/fizzbuzz/beginner-s-guide-to-audio-data/">https://www.kaggle.com/fizzbuzz/beginner-s-guide-to-audio-data/</a><a href="#fnref-1" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
