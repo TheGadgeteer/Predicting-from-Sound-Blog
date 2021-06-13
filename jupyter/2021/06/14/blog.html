@@ -204,8 +204,6 @@ The spectogram is depicted as a heat map, which means the intensity at a specifi
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>TODO: Features to extract from an audio signal
-spectral features (frequency-based), e.g. spectral centroid, spectral density ...</p>
 <h3 id="MFCC-(Mel-Frequency-Cepstral-Coefficients)">
 <a class="anchor" href="#MFCC-(Mel-Frequency-Cepstral-Coefficients)" aria-hidden="true"><span class="octicon octicon-link"></span></a>MFCC (Mel-Frequency Cepstral Coefficients)<a class="anchor-link" href="#MFCC-(Mel-Frequency-Cepstral-Coefficients)"> </a>
 </h3>
@@ -227,7 +225,7 @@ spectral features (frequency-based), e.g. spectral centroid, spectral density ..
 <h3 id="Preprocessing">
 <a class="anchor" href="#Preprocessing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Preprocessing<a class="anchor-link" href="#Preprocessing"> </a>
 </h3>
-<p>Preprocessing the raw audio material is an essential step to improve the accuracy of our network.</p>
+<p>Preprocessing the raw audio material is an essential step to improve the accuracy of our network. We are applying several methods in order to test which ones improve performance.</p>
 <h4 id="Segmentation">
 <a class="anchor" href="#Segmentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Segmentation<a class="anchor-link" href="#Segmentation"> </a>
 </h4>
@@ -235,7 +233,7 @@ spectral features (frequency-based), e.g. spectral centroid, spectral density ..
 <h4 id="Normalization">
 <a class="anchor" href="#Normalization" aria-hidden="true"><span class="octicon octicon-link"></span></a>Normalization<a class="anchor-link" href="#Normalization"> </a>
 </h4>
-<p>...</p>
+<p>A common way to normalize audio signals is to set their RMS (root mean square) to a fixed value. The RMS of a signal represents the effective value of a signal. We set the RMS of each audio signal to one by calculating the RMS over the signal and then dividing each sample value by the RMS. Using this kind of normalization gave the network accuracy a slight bump.</p>
 <h4 id="Removing-background-noise">
 <a class="anchor" href="#Removing-background-noise" aria-hidden="true"><span class="octicon octicon-link"></span></a>Removing background noise<a class="anchor-link" href="#Removing-background-noise"> </a>
 </h4>
