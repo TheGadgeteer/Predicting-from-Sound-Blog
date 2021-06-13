@@ -77,7 +77,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      5 min read
+      4 min read
     
 </span></p>
 
@@ -124,15 +124,31 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#MFCC-(Mel-Frequency-Cepstral-Coefficients)">MFCC (Mel-Frequency Cepstral Coefficients) </a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#Creating-the-dataset">Creating the dataset </a></li>
+<li class="toc-entry toc-h2"><a href="#The-Dataset">The Dataset </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Creating-the-dataset">Creating the dataset </a></li>
+<li class="toc-entry toc-h3"><a href="#Preprocessing">Preprocessing </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Segmentation">Segmentation </a></li>
+<li class="toc-entry toc-h4"><a href="#Normalization">Normalization </a></li>
+<li class="toc-entry toc-h4"><a href="#Removing-background-noise">Removing background noise </a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toc-entry toc-h1"><a href="#Hide">Hide </a>
 <ul>
 <li class="toc-entry toc-h2"><a href="#The-Dataset">The Dataset </a></li>
 <li class="toc-entry toc-h2"><a href="#Creating-the-network">Creating the network </a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#Network-input">Network input </a></li>
+<li class="toc-entry toc-h3"><a href="#Python-implementation">Python implementation </a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Hide">Hide </a>
+<ul>
 <li class="toc-entry toc-h2"><a href="#Results-and-Conclusion">Results and Conclusion </a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#Source-code">Source code </a></li>
@@ -274,11 +290,27 @@ spectral features (frequency-based), e.g. spectral centroid, spectral density ..
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Creating-the-dataset">
-<a class="anchor" href="#Creating-the-dataset" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating the dataset<a class="anchor-link" href="#Creating-the-dataset"> </a>
+<h2 id="The-Dataset">
+<a class="anchor" href="#The-Dataset" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Dataset<a class="anchor-link" href="#The-Dataset"> </a>
 </h2>
+<h3 id="Creating-the-dataset">
+<a class="anchor" href="#Creating-the-dataset" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating the dataset<a class="anchor-link" href="#Creating-the-dataset"> </a>
+</h3>
 <p>Aleksander</p>
-
+<h3 id="Preprocessing">
+<a class="anchor" href="#Preprocessing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Preprocessing<a class="anchor-link" href="#Preprocessing"> </a>
+</h3>
+<h4 id="Segmentation">
+<a class="anchor" href="#Segmentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Segmentation<a class="anchor-link" href="#Segmentation"> </a>
+</h4>
+<p>?</p>
+<h4 id="Normalization">
+<a class="anchor" href="#Normalization" aria-hidden="true"><span class="octicon octicon-link"></span></a>Normalization<a class="anchor-link" href="#Normalization"> </a>
+</h4>
+<p>...</p>
+<h4 id="Removing-background-noise">
+<a class="anchor" href="#Removing-background-noise" aria-hidden="true"><span class="octicon octicon-link"></span></a>Removing background noise<a class="anchor-link" href="#Removing-background-noise"> </a>
+</h4>
 </div>
 </div>
 </div>
@@ -316,9 +348,30 @@ It contains sounds from 41 different categories such as trumpet or fireworks, wi
 <a class="anchor" href="#Network-input" aria-hidden="true"><span class="octicon octicon-link"></span></a>Network input<a class="anchor-link" href="#Network-input"> </a>
 </h3>
 <p>A major design decision is in which format the input audio signal will be fed to the network. 
-Theoretically, raw array is possible</p>
-<p>Creating a spectogram and feeding it as image</p>
-<p>Using MFCC</p>
+The simplest way would be to emply the raw PCM data, however using features extracted from these data as input instead can provide several advantages. First, the performance will likely be better if meaningful features are chosen. Second, training will be faster if the features represent the raw data more compactly, as the amount of data that the network has to process is smaller. This is especially the case for using MFCCs, as these provide a very compact representation of the frequency spectrum. Another commonly used input format is creating a spectrogram from the raw audio signal and then feeding the spectogram to the network as an image. This allows to employ prevalent image processing techniques to the neural network like convolutional layers.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Python-implementation">
+<a class="anchor" href="#Python-implementation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Python implementation<a class="anchor-link" href="#Python-implementation"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Hide">
+<a class="anchor" href="#Hide" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hide<a class="anchor-link" href="#Hide"> </a>
+</h1>
+<p>Now, we build our network model. 
+The model starts with a convolutional layer followed by ReLU activation and a maxpool layer. Batch normalization is applied by inserting the corresponding layer before the activation function. 
+This structure is repeated 3 more times, then the model ends with a fully connected layer of size 64 with batch normalization. The final output is given by a softmax layer which produces a probability distribution over the 41 classes.</p>
+<p>As a loss function, we use cross entropy, and the Adam optimizer is used for training.</p>
 
 </div>
 </div>
@@ -334,49 +387,9 @@ Theoretically, raw array is possible</p>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>At this point we must decide in which format we will provide the network input. The dataset samples are given as raw audio data files, which could be directly used as input. However this has several disadvantages, one of them being the extensive memory usage. Loading the entire dataset into memory might exceed our capacities. A so-called data generator can provide relief. It loads the samples one by one in real-time during training and testing instead of using the naive approach of loading all samples at once. The code for such a data generator can be found at <a href="https://stanford.edu/~shervine/blog/keras-how-to-generate-data-on-the-fly">https://stanford.edu/~shervine/blog/keras-how-to-generate-data-on-the-fly</a>.</p>
-<p>Still, computations on large data are more time-consuming, especially when they are loaded into memory on-the-fly like it is the case for a data generator. A better idea might be to extract features from the raw audio files and use these as input. This essentially compresses the input, which makes the use of a data generator unnecessary and greatly accelerates the training process.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Therefore as a processing step, we are extracting so-called MFCC audio features from our input data using the Librosa library. The MFCC data are created one by one for each sample and stored in a variable X. This process is quite time-consuming. After it is done, we finally normalize the generated input data.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Now, we build our network model. 
-The model starts with a convolutional layer followed by ReLU activation and a maxpool layer. Batch normalization is applied by inserting the corresponding layer before the activation function. 
-This structure is repeated 3 more times, then the model ends with a fully connected layer of size 64 with batch normalization. The final output is given by a softmax layer which produces a probability distribution over the 41 classes.</p>
-<p>As a loss function, we use cross entropy, and the Adam optimizer is used for training.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>To prepare the output, we are converting the raw labels to integer indices and are setting the filename as the index for the train and test data:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Results-and-Conclusion">
 <a class="anchor" href="#Results-and-Conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Results and Conclusion<a class="anchor-link" href="#Results-and-Conclusion"> </a>
 </h2>
-<p>Training for 30 epochs results in a promising training accuracy of around 90%. However the network currently shows strong overfitting, as the accuracy on the validation set barely reaches 40%. 
-Further investigation is needed in order to find ways to reduce this massive gap.</p>
-<p>Future work includes exploring other ways to obtain information from sounds, for example predicting the distance from a sound source given a sound sample.</p>
-
 </div>
 </div>
 </div>
