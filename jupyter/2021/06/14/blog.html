@@ -229,7 +229,7 @@ The spectogram is depicted as a heat map, which means the intensity at a specifi
 <h2 id="The-Dataset">
 <a class="anchor" href="#The-Dataset" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Dataset<a class="anchor-link" href="#The-Dataset"> </a>
 </h2>
-<p>For our project, we used an <a href="https://zenodo.org/record/4060432">FSD50k Zenodo</a> audio dataset, commonly used in kaggle competitions. It has over 50k audio samples with 200 classes, one audio sample having multiple classes. The FSD50k dataset would be used for the classification part of this project.</p>
+<p>For our project, we used an <a href="https://zenodo.org/record/4060432">FSD50k Zenodo</a> audio dataset, commonly used in kaggle competitions. It has over 50k audio samples with 200 classes, with one audio sample having multiple classes. The FSD50k dataset was utilized for the classification part of this project.</p>
 <h3 id="Creating-our-own-dataset">
 <a class="anchor" href="#Creating-our-own-dataset" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating our own dataset<a class="anchor-link" href="#Creating-our-own-dataset"> </a>
 </h3>
@@ -257,7 +257,7 @@ The spectogram is depicted as a heat map, which means the intensity at a specifi
 <h4 id="Normalization">
 <a class="anchor" href="#Normalization" aria-hidden="true"><span class="octicon octicon-link"></span></a>Normalization<a class="anchor-link" href="#Normalization"> </a>
 </h4>
-<p>One way to normalize audio signals as part of data preparation is to set the RMS (root mean square) of all audio signals to a fixed value <sup id="fnref-2" class="footnote-ref"><a href="#fn-2">2</a></sup>. The RMS of a signal is its effective value, which can be interpreted as the average power output.</p>
+<p>One way to normalize audio signals as part of data preparation is to set the RMS (root mean square) of all audio signals to a fixed value <sup id="fnref-2" class="footnote-ref"><a href="#fn-2">2</a></sup>. This can be done by calculating the RMS for each audio sample and then dividing all the sample values by the RMS. Normalizing the RMS can be interpreted as ensuring that each audio sample has the same average power output.</p>
 <p>Another way is to use the common min/max normalization, which we ended up using in the project due to better results.</p>
 
 </div>
@@ -352,9 +352,9 @@ This decision was inspired by a popular blog from a kaggle competition called <a
 <a class="anchor" href="#Evaluation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Evaluation<a class="anchor-link" href="#Evaluation"> </a>
 </h5>
 <p>As we are dealing with a multi-class classification task, commonly used performance metrics for binary classification tasks aren't suitable. For example, the classic F1 score the mean of precision and recall. The precision describes how good the model is at predicting the positive outcome, and the recall quantifies the model's ability to predict positive samples as positive. This however doesn't make sense for predicting multiple classes, as there is no clear positive and negative class.</p>
-<p>The so-called F-Beta metric overcomes this by first calculating prediction and recall for each class in a one vs rest manner, and then averaging them over all the classes. A constant Beta is utilized in order to weigh precision and recall differently. We are using the common choice of two for Beta, which makes recall valued twice as highly as precision. 
+<p>The so-called F-Beta metric overcomes this by first calculating prediction and recall for each class in a one vs rest manner and then averaging them over all the classes. A constant Beta is utilized in order to weigh precision and recall differently. We are using the common choice of two for Beta, which makes recall valued twice as highly as precision. 
 The F-Beta metric is calculated as follows:</p>
-<p>F-Beta = (1 + Beta^2) x (precision x recall) / (Beta^2 x precision + recall)</p>
+<p><em>F-Beta = (1 + Beta^2) x (precision x recall) / (Beta^2 x precision + recall)</em></p>
 <p><img src="/Predicting-from-Sound-Blog/images/copied_from_nb/second_model.png" alt="" title="Figure x"></p>
 <p>The results in the above figure show two graphs, cross entropy loss and F-Beta. This figure explains that it is quite heavily overfitting the data, however, the F-Beta value is close to the ideal, signifying the</p>
 <h4 id="Distance">
