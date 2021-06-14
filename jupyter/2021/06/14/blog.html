@@ -77,7 +77,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      11 min read
+      12 min read
     
 </span></p>
 
@@ -144,7 +144,12 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#Model-implementation">Model implementation </a>
 <ul>
 <li class="toc-entry toc-h4"><a href="#Python-framework">Python framework </a></li>
-<li class="toc-entry toc-h4"><a href="#Classification">Classification </a></li>
+<li class="toc-entry toc-h4"><a href="#Classification">Classification </a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#Tackling-multi-label-classification">Tackling multi-label classification </a></li>
+<li class="toc-entry toc-h5"><a href="#Evaluation">Evaluation </a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h4"><a href="#Distance">Distance </a></li>
 </ul>
 </li>
@@ -341,7 +346,7 @@ The simplest way would be to emply the raw PCM data, however using features extr
 </h4>
 <p>We are using Keras as the deep learning library to construct our network.</p>
 <p>For audio processing, Librosa is a suitable library. It provides several functions to extract features from audio data, e.g. for creating spectograms, calculating the MFCCs and performing a fourier transform.</p>
-<p>Other libraries, such as SKlearn and pandas, help with the data processin and KFold model fitting.</p>
+<p>Other libraries, such as SKlearn and pandas, help with the data processing and KFold model fitting.</p>
 
 </div>
 </div>
@@ -357,6 +362,20 @@ This decision was inspired by a popular blog from a kaggle competition called <a
 <p>The convolutional network model can be seen in Figure 7.</p>
 <p><img src="/Predicting-from-Sound-Blog/images/copied_from_nb/class1.png" alt="" title="Figure 7"></p>
 <p>This model, however, proved to perform very poorly, barely hitting 1% validation accuracy, even though the training accuracy proved to be at 28%. We believe the cause for this is due to the small size of the dataset (2500) and the abundance of classes, leaving little room for error.</p>
+<h5 id="Tackling-multi-label-classification">
+<a class="anchor" href="#Tackling-multi-label-classification" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tackling multi-label classification<a class="anchor-link" href="#Tackling-multi-label-classification"> </a>
+</h5>
+<p>In addition to the problems mentioned above, this model isn't suited to predict multiple labels. Jason Brownlee and his guide "Multi-Label Classification of Satellite Phootos of the Amazon Rainforest" gave us an idea: what we can do is map all n labels to integers and store an n-element vector for each audio file. This vector contains 0 for labels that don't apply to the audio file, and 1 for labels that do. This corresponds to one hot encoding. After utilizing this technique, the predicting process is quite straightforward, resembling an Image Classification task.</p>
+<h5 id="Evaluation">
+<a class="anchor" href="#Evaluation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Evaluation<a class="anchor-link" href="#Evaluation"> </a>
+</h5>
+<p>As we are dealing with a multi-class classification task, commonly used performance metrics for binary classification tasks aren't suitable. For example, the classic F1 score the mean of precision and recall. The precision describes how good the model is at predicting the positive outcome, and the recall quantifies the model's ability to predict positive samples as positive. This however doesn't make sense for predicting multiple classes, as there is no clear positive and negative class.</p>
+<p>The so-called F-Beta metric overcomes this by first calculating prediction and recall for each class in a one vs rest manner, and then averaging them over all the classes. A constant Beta is utilized in order to weigh precision and recall differently. We are using the common choice of two for Beta, which makes recall valued twice as highly as precision. 
+The F-Beta metric is calculated as follows:</p>
+$$
+\text{F-Beta} = \frac{(1 + \text{Beta}^2) \cdot \text{precision} \cdot \text{recall}}{\text{Beta}^2 \cdot \text{precision} + \text{recall}}
+$$<p><img src="/Predicting-from-Sound-Blog/images/copied_from_nb/second_model.png" alt="" title="Figure x"></p>
+<p>The results in the above figure show two graphs, cross entropy loss and F-Beta. This figure explains that it is quite heavily overfitting the data, however, the F-Beta value is close to the ideal, signifying the</p>
 <h4 id="Distance">
 <a class="anchor" href="#Distance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Distance<a class="anchor-link" href="#Distance"> </a>
 </h4>
@@ -397,7 +416,7 @@ This decision was inspired by a popular blog from a kaggle competition called <a
 <h3 id="Source-code">
 <a class="anchor" href="#Source-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>Source code<a class="anchor-link" href="#Source-code"> </a>
 </h3>
-<p><a href="">Link</a></p>
+<p><a href="https://github.com/TheGadgeteer/Predicting-from-Sound-Blog/tree/master/Code">Github link</a></p>
 
 </div>
 </div>
