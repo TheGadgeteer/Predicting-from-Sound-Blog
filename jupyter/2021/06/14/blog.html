@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Predicting from Sound | fastpages</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Predicting from Sound" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A Neural Networks project by Aleksander Nikolajev, Kayahan Kaya and Severin Brunner" />
+<meta property="og:description" content="A Neural Networks project by Aleksander Nikolajev, Kayahan Kaya and Severin Brunner" />
+<link rel="canonical" href="https://thegadgeteer.github.io/Predicting-from-Sound-Blog/jupyter/2021/06/14/blog.html" />
+<meta property="og:url" content="https://thegadgeteer.github.io/Predicting-from-Sound-Blog/jupyter/2021/06/14/blog.html" />
+<meta property="og:site_name" content="fastpages" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-06-14T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"A Neural Networks project by Aleksander Nikolajev, Kayahan Kaya and Severin Brunner","url":"https://thegadgeteer.github.io/Predicting-from-Sound-Blog/jupyter/2021/06/14/blog.html","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://thegadgeteer.github.io/Predicting-from-Sound-Blog/jupyter/2021/06/14/blog.html"},"headline":"Predicting from Sound","dateModified":"2021-06-14T00:00:00-05:00","datePublished":"2021-06-14T00:00:00-05:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/Predicting-from-Sound-Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://thegadgeteer.github.io/Predicting-from-Sound-Blog/feed.xml" title="fastpages" /><link rel="shortcut icon" type="image/x-icon" href="/Predicting-from-Sound-Blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/Predicting-from-Sound-Blog/">fastpages</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Predicting-from-Sound-Blog/about/">About Me</a><a class="page-link" href="/Predicting-from-Sound-Blog/search/">Search</a><a class="page-link" href="/Predicting-from-Sound-Blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Predicting from Sound</h1><p class="page-description">A Neural Networks project by Aleksander Nikolajev, Kayahan Kaya and Severin Brunner</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-06-14T00:00:00-05:00" itemprop="datePublished">
+        Jun 14, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      11 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/Predicting-from-Sound-Blog/categories/#jupyter">jupyter</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/TheGadgeteer/Predicting-from-Sound-Blog/tree/master/_notebooks/2021-06-14-blog.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/Predicting-from-Sound-Blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/TheGadgeteer/Predicting-from-Sound-Blog/master?filepath=_notebooks%2F2021-06-14-blog.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/Predicting-from-Sound-Blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/TheGadgeteer/Predicting-from-Sound-Blog/blob/master/_notebooks/2021-06-14-blog.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/Predicting-from-Sound-Blog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#Introduction">Introduction </a></li>
+<li class="toc-entry toc-h2"><a href="#Audio-theory">Audio theory </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Pulse-code-modulation-(PCM)">Pulse-code modulation (PCM) </a></li>
+<li class="toc-entry toc-h3"><a href="#Spectograms">Spectograms </a></li>
+<li class="toc-entry toc-h3"><a href="#MFCC-(Mel-Frequency-Cepstral-Coefficients)">MFCC (Mel-Frequency Cepstral Coefficients) </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#The-Dataset">The Dataset </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Creating-our-own-dataset">Creating our own dataset </a></li>
+<li class="toc-entry toc-h3"><a href="#Preprocessing">Preprocessing </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Data">Data </a></li>
+<li class="toc-entry toc-h4"><a href="#Classification">Classification </a></li>
+<li class="toc-entry toc-h4"><a href="#Distance">Distance </a></li>
+<li class="toc-entry toc-h4"><a href="#Normalization">Normalization </a></li>
+<li class="toc-entry toc-h4"><a href="#Removing-background-noise">Removing background noise </a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Creating-the-network">Creating the network </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Network-input">Network input </a></li>
+<li class="toc-entry toc-h3"><a href="#Model-implementation">Model implementation </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Python-framework">Python framework </a></li>
+<li class="toc-entry toc-h4"><a href="#Classification">Classification </a></li>
+<li class="toc-entry toc-h4"><a href="#Distance">Distance </a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Results">Results </a></li>
+<li class="toc-entry toc-h2"><a href="#Conclusion-and-future-work">Conclusion and future work </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Source-code">Source code </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#References">References </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-06-14-blog.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Introduction">
+<a class="anchor" href="#Introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction<a class="anchor-link" href="#Introduction"> </a>
+</h2>
+<p>Gaining information from sounds is a fundamental human ability: We can detect and identify objects just from our hearing as well as estimate the direction and distance of that object. 
+Writing software with the same abilities is a difficult task due to the enormous complexity of audio signals. Applying machine learning, in particular neural networks, is the most promising approach to meet this challenge. 
+In this project, we are researching common methods to deploy neural networks for prediction from sound and are creating our own neural network that is able to extract certain information from audio samples. In particular, we are trying to predict the source of a sound as well as the distance between source and microphone.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Audio-theory">
+<a class="anchor" href="#Audio-theory" aria-hidden="true"><span class="octicon octicon-link"></span></a>Audio theory<a class="anchor-link" href="#Audio-theory"> </a>
+</h2>
+<p>In this section, essential theoretical elements of audio analysis are introduced, which we later utilize for our network.</p>
+<h3 id="Pulse-code-modulation-(PCM)">
+<a class="anchor" href="#Pulse-code-modulation-(PCM)" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pulse-code modulation (PCM)<a class="anchor-link" href="#Pulse-code-modulation-(PCM)"> </a>
+</h3>
+<p>In order to store an analog audio signal in memory, it has to be digitized by applying sampling and quantization. Sampling refers to measuring the signal values at specific timesteps, which transforms the original time-continuous signal into a time-discrete one. Quantization implies mapping the continuous signal values to discrete values in a specific range, e.g. 16 bits.</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/b/bf/Pcm.svg" alt="" title="Figure 1: Sampling and quantization of an analog signal (red) with 4-bit PCM, resulting in a time-discrete and value-discrete signal (blue)."></p>
+<p>PCM is a format for storing uncompressed audio signals. It simply contains an array of values that have been produced by sampling and quantizing an analog signal. It has two basic properties:  The sampling rate (how many samples per second were taken) and the bit depth (the number of bits per sample value), which determines the resolution. A typical sampling rate is 44.1 kHz (e.g. CDs), and 16 bits is a common choice for the bit depth.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Spectograms">
+<a class="anchor" href="#Spectograms" aria-hidden="true"><span class="octicon octicon-link"></span></a>Spectograms<a class="anchor-link" href="#Spectograms"> </a>
+</h3>
+<p>A spectrogram is a visualiziaton of the frequency spectrum of a signal over time. The frequency spectrum represents the signal strength of the various frequencies present in the signal. It can be calculated by applying a fourier transform to the signal.
+The spectogram is depicted as a heat map, which means the intensity at a specific frequency and time is expressed through the color.
+<img src="/Predicting-from-Sound-Blog/images/copied_from_nb/clarinette_spectogram.png" alt="" title="Figure 2: Spectrogram of a recording of a clarinet playing a note. The bottom line is at the frequency of the keynote, the higher lines are the harmonics. The clarinet starts playing at 0.4 seconds."></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="MFCC-(Mel-Frequency-Cepstral-Coefficients)">
+<a class="anchor" href="#MFCC-(Mel-Frequency-Cepstral-Coefficients)" aria-hidden="true"><span class="octicon octicon-link"></span></a>MFCC (Mel-Frequency Cepstral Coefficients)<a class="anchor-link" href="#MFCC-(Mel-Frequency-Cepstral-Coefficients)"> </a>
+</h3>
+<p>For audio analysis, it often makes sense to extract certain features from the raw audio signal, like the signal energy or the spectogram. As a feature, the MFCCs represent the entire frequency spectrum compactly with few values (e.g. 40), which approximates the human auditory system more closely. This has proven useful for applications like speech or song recognition.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="The-Dataset">
+<a class="anchor" href="#The-Dataset" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Dataset<a class="anchor-link" href="#The-Dataset"> </a>
+</h2>
+<p>For our project, we used an <a href="https://zenodo.org/record/4060432">FSD50k Zenodo</a> audio dataset, commonly used in kaggle competitions. It has over 50k audio samples with 200 classes, one audio sample having multiple classes. The FSD50k dataset would be used for the classification part of this project.</p>
+<h3 id="Creating-our-own-dataset">
+<a class="anchor" href="#Creating-our-own-dataset" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating our own dataset<a class="anchor-link" href="#Creating-our-own-dataset"> </a>
+</h3>
+<p>While the FSD50k dataset has plenty of sound samples, it cannot be used for distance predictions on it's own. Using the FSD50k dataset, we recorded approximately 3000 audio samples from different distances in one room. Note that the room would not be isolated from sound, and background noise would be added for extra challenge.</p>
+<p><img src="/Predicting-from-Sound-Blog/images/copied_from_nb/mic.png" alt="" title="Figure 3"></p>
+<p>Looking at figure 3, we can see that the microphone (M1 and M2) was either 1 meter or 2 meters away from the source audio. To properly record this audio, we used a distributed client-server architecture that would notify the microphone client when the source audio would start playing the sound (see figure 4).</p>
+<p><img src="/Predicting-from-Sound-Blog/images/copied_from_nb/dataset_recording_draft.png" alt="" title="Figure 4: Draft of the recording process. A PC connected to a speaker plays the samples, while a laptop records it with a microphone from a certain distance d, in our case 1 and 2 meters. The PC signals the laptop when it starts and stops playing over a socket connection, so the laptop can start and stop recording its samples accordingly."></p>
+<p>It could be argued that it would be easier to play and record the sound from the same computer. This, however, would not be possible, as we did not have the proper equipment necessary to accomplish this. The resulting distance dataset would be approximately 3000 audio samples big with over 100 different classes.</p>
+<p>This process introduced some background noise into the samples, which we were attempting to reduce by means of preprocessing.</p>
+<h3 id="Preprocessing">
+<a class="anchor" href="#Preprocessing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Preprocessing<a class="anchor-link" href="#Preprocessing"> </a>
+</h3>
+<h4 id="Data">
+<a class="anchor" href="#Data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data<a class="anchor-link" href="#Data"> </a>
+</h4>
+<p>During the making of this project, we noticed that the distributed client-server architecture would sometimes start recording too late, as the audio file is so short, it could not send the message in time. Because recording again was deemed wasteful for time, we decided to filter out non-existant audio samples. The filtered dataset would still be over 2500 audio samples large.</p>
+<p>As mentioned before, a singular audio sample could have multiple classes. While this is not an issue with distance prediction, this could provide an extra challenge in the classification part of the project. Instead of limited each audio sample to one class, we made sure that each audio sample had the same amount of classes. The figure  below shows an example of the process.</p>
+<p><img src="/Predicting-from-Sound-Blog/images/copied_from_nb/figure_prep.png" alt="" title="Figure 5"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Classification">
+<a class="anchor" href="#Classification" aria-hidden="true"><span class="octicon octicon-link"></span></a>Classification<a class="anchor-link" href="#Classification"> </a>
+</h4>
+<p>Preprocessing the raw audio material is an essential step to improve the accuracy of our network. The audio prediction portion of this project could easily boil down to image classification, by feeding raw audio inputs to a neural network model. Figure 6 shows these raw audio inputs and their differences.</p>
+<p><img src="/Predicting-from-Sound-Blog/images/copied_from_nb/figure_example.png" alt="" title="Figure 6"></p>
+<p>Instead, however, we opted to extract MFCC features using Librosa. This would give us mfcc features from a time series in an array, which we can then use for classification.</p>
+<h4 id="Distance">
+<a class="anchor" href="#Distance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Distance<a class="anchor-link" href="#Distance"> </a>
+</h4>
+<p>For the distance portion, we decided to try a different approach. We would create a spectogram of each audio sample and make this an image classification problem. There are primarly two reasons for adopting this approach:</p>
+<ol>
+<li>The previous approach yielded petty results in terms of accuracy.</li>
+<li>We wanted to compare feature extraction and image classification approaches.</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Normalization">
+<a class="anchor" href="#Normalization" aria-hidden="true"><span class="octicon octicon-link"></span></a>Normalization<a class="anchor-link" href="#Normalization"> </a>
+</h4>
+<p>One way to normalize audio signals as part of data preparation is to set the RMS (root mean square) of all audio signals to a fixed value <sup id="fnref-2" class="footnote-ref"><a href="#fn-2">2</a></sup>. The RMS of a signal is its effective value, which can be interpreted as the average power output.</p>
+<p>Another way is to use the common min/max normalization, which we ended up using in the project due to better results.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Removing-background-noise">
+<a class="anchor" href="#Removing-background-noise" aria-hidden="true"><span class="octicon octicon-link"></span></a>Removing background noise<a class="anchor-link" href="#Removing-background-noise"> </a>
+</h4>
+<p>In order to provide as much meaningful information as possible to the network, any unintended parts of the audio signal need to be filtered out. The recording process injected a certain amount of noise into the samples, which confound the network and therefore should be reduced as much as possible. For this, we tested several common background noise removal approaches for their effectiveness.</p>
+<p>The method of short-term energy for noise cancellation is commonly used for voice detection <sup id="fnref-3" class="footnote-ref"><a href="#fn-3">3</a></sup>. It detects the noisy parts of a signal because they have less energy than the voice parts. The noisy parts can then be removed from the signal.</p>
+<p>For noise cancellation in vibration signals, autocorrelation has been shown to be a useful tool <sup id="fnref-4" class="footnote-ref"><a href="#fn-4">4</a></sup>. The vibration is correlated to itself, however the noise is neither correlated to itself nor the signal. Therefore repeatedly applying the autocorrelation operation to the signal reduces the noise more and more while the vibration is not decreased.</p>
+<p>These two concepts however rely on a priori estimates of the signal, i.e. the signal being a voice or a vibration. Another method, Adaptive Noise Cancellation (ANC), deals with noise without any of these assumptions. ANC is achieved by introducing a canceling antinoise wave through secondary sources. These secondary sources are interconnected through an electronic system using a specific signal processing algorithm for the particular cancellation scheme. To implement ANC,we wrote an algorithm in matlab for a single channel feed-forward active noise control system. We then sent a sequence of training data to estimate the noise before the setup of noise cancellation, and trained the filter with white gaussian noise.</p>
+<p><img src="/Predicting-from-Sound-Blog/images/copied_from_nb/ANC_error.jpg" alt="" title="Figure 7: Calculated error of a feedforward ANC">
+We took one of the longer noisy signals from our  dataset and tried to eliminate the noise with the ANC feedforward method. In figure 7, our target is the error. Here error is original signal subtracted by filtered signal. Our target is to minimize error as much as we can. From figure 1 filter is almost making error zero in  80 iteration then exit the loop ??</p>
+<p>Figure 8 shows the difference between original signal and noise eliminated signal.</p>
+<p><img src="/Predicting-from-Sound-Blog/images/copied_from_nb/ANC_difference.png" alt="" title="Figure 8: Original vs. denoised signal"></p>
+<p>We applied the different denoising techniques, which indeed resulted in less interference for some samples. However due to the big diversity in our dataset the findings were inconsistent. What worked for one kind of signal effected another kind of signal negatively. Because considering each signal individually would be far too costly, we ultimately decided not to deploy any denoising techniques for now and instead let our network deal with the background noise. In future work, dealing with this could lead to accuracy improvements.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Creating-the-network">
+<a class="anchor" href="#Creating-the-network" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating the network<a class="anchor-link" href="#Creating-the-network"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Network-input">
+<a class="anchor" href="#Network-input" aria-hidden="true"><span class="octicon octicon-link"></span></a>Network input<a class="anchor-link" href="#Network-input"> </a>
+</h3>
+<p>A major design decision is in which format the input audio signal will be fed to the network. 
+The simplest way would be to emply the raw PCM data, however using features extracted from these data as input instead can provide several advantages. First, the performance will likely be better if meaningful features are chosen. Second, training will be faster if the features represent the raw data more compactly, as the amount of data that the network has to process is smaller. This is especially the case for using MFCCs, as these provide a very compact representation of the frequency spectrum. Another commonly used input format is creating a spectrogram from the raw audio signal and then feeding the spectogram to the network as an image. This allows to employ prevalent image processing techniques to the neural network like convolutional layers.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Model-implementation">
+<a class="anchor" href="#Model-implementation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Model implementation<a class="anchor-link" href="#Model-implementation"> </a>
+</h3>
+<p>Due to having two different problem statements, we opted on using two different models.  In this section, we will discuss the two models that were implemented, as well as their performance.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Python-framework">
+<a class="anchor" href="#Python-framework" aria-hidden="true"><span class="octicon octicon-link"></span></a>Python framework<a class="anchor-link" href="#Python-framework"> </a>
+</h4>
+<p>We are using Keras as the deep learning library to construct our network.</p>
+<p>For audio processing, Librosa is a suitable library. It provides several functions to extract features from audio data, e.g. for creating spectograms, calculating the MFCCs and performing a fourier transform.</p>
+<p>Other libraries, such as SKlearn and pandas, help with the data processin and KFold model fitting.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Classification">
+<a class="anchor" href="#Classification" aria-hidden="true"><span class="octicon octicon-link"></span></a>Classification<a class="anchor-link" href="#Classification"> </a>
+</h4>
+<p>For the classification, we used a classic Convolution Neural Network (CNN).
+This decision was inspired by a popular blog from a kaggle competition called <a href="https://www.kaggle.com/fizzbuzz/beginner-s-guide-to-audio-data/">"Beginners guide to audio data"</a>.</p>
+<p>The convolutional network model can be seen in Figure 7.</p>
+<p><img src="/Predicting-from-Sound-Blog/images/copied_from_nb/class1.png" alt="" title="Figure 7"></p>
+<p>This model, however, proved to perform very poorly, barely hitting 1% validation accuracy, even though the training accuracy proved to be at 28%. We believe the cause for this is due to the small size of the dataset (2500) and the abundance of classes, leaving little room for error.</p>
+<h4 id="Distance">
+<a class="anchor" href="#Distance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Distance<a class="anchor-link" href="#Distance"> </a>
+</h4>
+<p>For the distance prediction model, we fit it with images of all the audio spectograms. As for the model itself, we used a new concept for us - CRNN.</p>
+<p>The concept to use CRNN for distance classification was proposed by Mariam Yiwere et al. in <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6982911/">"Sound Source Distance Estimation Using Deep Learning: An Image Classification Approach</a>. A CRNN enables a model to learn bot hthe spectral and temporal features and relationships effectively.</p>
+<p>The CRNN model can be see in Figure 9.</p>
+<p><img src="/Predicting-from-Sound-Blog/images/copied_from_nb/CRNN.png" alt="" title="Figure 9"></p>
+<p>The hope for this project was that it would predict better than a coin flip, because we only had the time to record two different distances (1 and 2). Our hope was fulfilled, and the validation accuracy for this model was 53%.</p>
+<p>As a loss function, we use cross entropy, and the Adam optimizer is used for training.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Results">
+<a class="anchor" href="#Results" aria-hidden="true"><span class="octicon octicon-link"></span></a>Results<a class="anchor-link" href="#Results"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Conclusion-and-future-work">
+<a class="anchor" href="#Conclusion-and-future-work" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion and future work<a class="anchor-link" href="#Conclusion-and-future-work"> </a>
+</h2>
+<p>We have created 2 models for two different problem statements - that being audio classification and source distance prediction. For these tasks, we researched multiple to solve these problems, and explain concepts such as CRNN and audio feature extraction. While the results are not great, we believe that the methods we used are intuitive and correct.</p>
+<p>For future work, we would mention the idea of using different kinds of noise cancellation techniques that were researched throughout this project. One of those ideas is called Short-Term autocorellation Method, which capsuls the pitch point of signal.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Source-code">
+<a class="anchor" href="#Source-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>Source code<a class="anchor-link" href="#Source-code"> </a>
+</h3>
+<p><a href="">Link</a></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="References">
+<a class="anchor" href="#References" aria-hidden="true"><span class="octicon octicon-link"></span></a>References<a class="anchor-link" href="#References"> </a>
+</h2>
+<p></p>
+<div class="footnotes"><p id="fn-1">1. <a href="https://www.kaggle.com/fizzbuzz/beginner-s-guide-to-audio-data/">https://www.kaggle.com/fizzbuzz/beginner-s-guide-to-audio-data/</a><a href="#fnref-1" class="footnote footnotes">↩</a></p></div> USED?
+<p></p>
+<div class="footnotes"><p id="fn-2">2. <a href="https://arxiv.org/pdf/2003.04210.pdf">https://arxiv.org/pdf/2003.04210.pdf</a><a href="#fnref-2" class="footnote footnotes">↩</a></p></div>
+<p></p>
+<div class="footnotes"><p id="fn-3">3. <a href="https://www.researchgate.net/publication/263354982_A_Hierarchical_Framework_Approach_for_Voice_Activity_Detection_and_Speech_Enhancement">https://www.researchgate.net/publication/263354982_A_Hierarchical_Framework_Approach_for_Voice_Activity_Detection_and_Speech_Enhancement</a><a href="#fnref-3" class="footnote footnotes">↩</a></p></div>
+<p></p>
+<div class="footnotes"><p id="fn-4">4. <a href="https://www.sciencedirect.com/science/article/pii/S2590123020300426">https://www.sciencedirect.com/science/article/pii/S2590123020300426</a><a href="#fnref-4" class="footnote footnotes">↩</a></p></div>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="TheGadgeteer/Predicting-from-Sound-Blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/Predicting-from-Sound-Blog/jupyter/2021/06/14/blog.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/Predicting-from-Sound-Blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/Predicting-from-Sound-Blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/Predicting-from-Sound-Blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>An easy to use blogging platform with support for Jupyter Notebooks.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/fastai" title="fastai"><svg class="svg-icon grey"><use xlink:href="/Predicting-from-Sound-Blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/fastdotai" title="fastdotai"><svg class="svg-icon grey"><use xlink:href="/Predicting-from-Sound-Blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
