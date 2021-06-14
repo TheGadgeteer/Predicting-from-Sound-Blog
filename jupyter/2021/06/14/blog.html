@@ -175,9 +175,9 @@ window.onload = wrap_img;
 <h2 id="Introduction">
 <a class="anchor" href="#Introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction<a class="anchor-link" href="#Introduction"> </a>
 </h2>
-<p>Gaining information from sounds is a fundamental human ability: We can detect and identify objects just from our hearing as well as estimate the direction and distance of that object. 
+<p>Gaining information from sounds is a fundamental human ability: We can detect and identify objects just from our hearing as well as estimate the direction and distance to that object. 
 Writing software with the same abilities is a difficult task due to the enormous complexity of audio signals. Applying machine learning, in particular neural networks, is the most promising approach to meet this challenge. 
-In this project, we are researching common methods to deploy neural networks for prediction from sound and are creating our own neural network that is able to extract certain information from audio samples. In particular, we are trying to predict the source of a sound as well as the distance between source and microphone.</p>
+In this project, we are researching common methods to deploy neural networks for prediction from sounds and are creating our own neural network that is able to extract certain information from audio samples. In particular, we are trying to predict the source of a sound as well as the distance between its source and the microphone.</p>
 
 </div>
 </div>
@@ -188,13 +188,13 @@ In this project, we are researching common methods to deploy neural networks for
 <h2 id="Audio-theory">
 <a class="anchor" href="#Audio-theory" aria-hidden="true"><span class="octicon octicon-link"></span></a>Audio theory<a class="anchor-link" href="#Audio-theory"> </a>
 </h2>
-<p>In this section, essential theoretical elements of audio analysis are introduced, which we later utilize for our network.</p>
+<p>In this section, essential theoretical elements of audio analysis are introduced, which we will later utilize for our network.</p>
 <h3 id="Pulse-code-modulation-(PCM)">
 <a class="anchor" href="#Pulse-code-modulation-(PCM)" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pulse-code modulation (PCM)<a class="anchor-link" href="#Pulse-code-modulation-(PCM)"> </a>
 </h3>
 <p>In order to store an analog audio signal in memory, it has to be digitized by applying sampling and quantization. Sampling refers to measuring the signal values at specific timesteps, which transforms the original time-continuous signal into a time-discrete one. Quantization implies mapping the continuous signal values to discrete values in a specific range, e.g. 16 bits.</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/b/bf/Pcm.svg" alt="" title="Figure 1: Sampling and quantization of an analog signal (red) with 4-bit PCM, resulting in a time-discrete and value-discrete signal (blue)."></p>
-<p>PCM is a format for storing uncompressed audio signals. It simply contains an array of values that have been produced by sampling and quantizing an analog signal. It has two basic properties:  The sampling rate (how many samples per second were taken) and the bit depth (the number of bits per sample value), which determines the resolution. A typical sampling rate is 44.1 kHz (e.g. CDs), and 16 bits is a common choice for the bit depth.</p>
+<p>PCM is a format for storing uncompressed audio signals. It simply stores an array of values that have been produced by sampling and quantizing an analog signal. It has two basic properties:  The sampling rate (how many samples per second were taken) and the bit depth (the number of bits per sample value), which determines the resolution. A typical sampling rate is 44.1 kHz (e.g. CDs), a common choice for the bit depth is 16 bits.</p>
 
 </div>
 </div>
@@ -218,7 +218,7 @@ The spectogram is depicted as a heat map, which means the intensity at a specifi
 <h3 id="MFCC-(Mel-Frequency-Cepstral-Coefficients)">
 <a class="anchor" href="#MFCC-(Mel-Frequency-Cepstral-Coefficients)" aria-hidden="true"><span class="octicon octicon-link"></span></a>MFCC (Mel-Frequency Cepstral Coefficients)<a class="anchor-link" href="#MFCC-(Mel-Frequency-Cepstral-Coefficients)"> </a>
 </h3>
-<p>For audio analysis, it often makes sense to extract certain features from the raw audio signal, like the signal energy or the spectogram. As a feature, the MFCCs represent the entire frequency spectrum compactly with few values (e.g. 40), which approximates the human auditory system more closely. This has proven useful for applications like speech or song recognition.</p>
+<p>For audio analysis, it often makes sense to extract certain features from the raw audio signal in order to gain more information about the signal. The MFCCs are such features. They represent the entire frequency spectrum compactly with few values (e.g. 40), which approximates the human auditory system more closely. This has proven useful for applications like speech or song recognition.</p>
 
 </div>
 </div>
@@ -229,24 +229,24 @@ The spectogram is depicted as a heat map, which means the intensity at a specifi
 <h2 id="The-Dataset">
 <a class="anchor" href="#The-Dataset" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Dataset<a class="anchor-link" href="#The-Dataset"> </a>
 </h2>
-<p>For our project, we used an <a href="https://zenodo.org/record/4060432">FSD50k Zenodo</a> audio dataset, commonly used in kaggle competitions. It has over 50k audio samples with 200 classes, with one audio sample having multiple classes. The FSD50k dataset was utilized for the classification part of this project.</p>
+<p>For our project, we made use of the <a href="https://zenodo.org/record/4060432">FSD50k Zenodo</a> audio dataset, which is commonly used in kaggle competitions. It has over 50k audio samples with 200 classes, with each audio sample corresponding to multiple classes. This FSD50k dataset was utilized for the classification part of this project.</p>
 <h3 id="Creating-our-own-dataset">
 <a class="anchor" href="#Creating-our-own-dataset" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating our own dataset<a class="anchor-link" href="#Creating-our-own-dataset"> </a>
 </h3>
-<p>While the FSD50k dataset has plenty of sound samples, it cannot be used for distance predictions on its own. Using the FSD50k dataset, we recorded approximately 3000 audio samples from different distances in one room. Note that the room wasn't soundproof, therefore some background noise was inevitably included.</p>
-<p>Figure 3 demonstrates the recording process. We placed the microphone in a distance d of either 1 meter or 2 meters away from the speaker. To properly record the audio samples, we used a distributed client-server architecture that would notify the microphone client when the source audio would start playing the sound.</p>
+<p>While the FSD50k dataset has plenty of sound samples, it cannot be used for distance predictions on its own. Hence using the FSD50k dataset, we recorded approximately 3000 audio samples from different distances in one room. Note that the room wasn't soundproof, therefore some background noise was inevitably included.</p>
+<p>Figure 3 demonstrates the recording process. We placed the microphone in a distance of either 1 meter or 2 meters away from the speaker. To properly record the audio samples, we used a distributed client-server architecture that would notify the microphone client when the source audio would start playing the sound.</p>
 <p><img src="/Predicting-from-Sound-Blog/images/copied_from_nb/dataset_recording_draft.png" alt="" title="Figure 3: Draft of the recording process. A PC connected to a speaker plays the samples, while a laptop records it with a microphone from a certain distance d, in our case 1 and 2 meters. The PC signals the laptop when it starts and stops playing each sample over a socket connection, so the laptop can start and stop recording its samples accordingly."></p>
-<p>It could be argued that it would have been easier to play and record the sound from the same computer. This however was infeasible for us, as we didn't have the proper equipment necessary to accomplish this.</p>
-<p>The final distance dataset contained approximately 3000 audio samples from over 100 different classes.</p>
+<p>It could be argued that it would have been easier to play and record the sound from the same computer. However this was infeasible for us, as we didn't have the proper equipment necessary to accomplish this.</p>
+<p>After the recording work was done, our final distance dataset contained approximately 3000 audio samples from over 100 different classes.</p>
 <h3 id="Data-Preprocessing">
 <a class="anchor" href="#Data-Preprocessing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Preprocessing<a class="anchor-link" href="#Data-Preprocessing"> </a>
 </h3>
 <h4 id="Polishing-the-dataset">
 <a class="anchor" href="#Polishing-the-dataset" aria-hidden="true"><span class="octicon octicon-link"></span></a>Polishing the dataset<a class="anchor-link" href="#Polishing-the-dataset"> </a>
 </h4>
-<p>During the creation of the dataset, we noticed that the distributed client-server architecture would sometimes start recording too late, as the audio file was so short that it could not send the message in time. Because recording again was deemed wasteful of our precious time, we decided to filter out the non-existant audio samples. The filtered dataset was still over 2500 audio samples large.</p>
-<p>As mentioned before, a single audio sample could have multiple classes. While this is not an issue with distance prediction, this provided an extra challenge in the classification part of the project. A first step to manage this was to accomplish that all audio samples have the same amount of classes.  Figure 4 shows an example of the process.</p>
-<p><img src="/Predicting-from-Sound-Blog/images/copied_from_nb/figure_prep.png" alt="" title="Figure 4"></p>
+<p>During the creation of the dataset, we noticed that the distributed client-server architecture would sometimes start recording too late, as the audio file was so short that it could not send the message in time. Because recording again was deemed wasteful of our precious time, we decided to simply filter out the non-existant audio samples. The in this manner filtered dataset was still over 2500 audio samples large.</p>
+<p>As mentioned before, a single audio sample could have multiple classes. While this is not an issue with distance prediction, it provided an extra challenge in the classification part of the project. A first step to manage this was to make all audio samples have the same amount of classes.  Figure 4 shows an example of the process we used to accomplish this.</p>
+<p><img src="/Predicting-from-Sound-Blog/images/copied_from_nb/figure_prep.png" alt="" title="Figure 4: Adapting the dataset so that the amount of classes is the same for each audio sample"></p>
 
 </div>
 </div>
@@ -257,7 +257,7 @@ The spectogram is depicted as a heat map, which means the intensity at a specifi
 <h4 id="Normalization">
 <a class="anchor" href="#Normalization" aria-hidden="true"><span class="octicon octicon-link"></span></a>Normalization<a class="anchor-link" href="#Normalization"> </a>
 </h4>
-<p>One way to normalize audio signals as part of data preparation is to set the RMS (root mean square) of all audio signals to a fixed value <sup id="fnref-2" class="footnote-ref"><a href="#fn-2">2</a></sup>. This can be done by calculating the RMS for each audio sample and then dividing all the sample values by the RMS. Normalizing the RMS can be interpreted as ensuring that each audio sample has the same average power output.</p>
+<p>Normalizing the dataset is a frequently used technique to achieve better training results. In order to normalize raw audio signals, one way is to set the RMS (root mean square) of all signals to a fixed value <sup id="fnref-2" class="footnote-ref"><a href="#fn-2">2</a></sup>. This can be done by calculating the RMS for each audio sample and then dividing all the sample values by the RMS. Normalizing the RMS can be interpreted as ensuring that each audio sample has the same average power output.</p>
 <p>Another way is to use the common min/max normalization, which we ended up using in the project due to better results.</p>
 
 </div>
@@ -269,15 +269,15 @@ The spectogram is depicted as a heat map, which means the intensity at a specifi
 <h4 id="Removing-background-noise">
 <a class="anchor" href="#Removing-background-noise" aria-hidden="true"><span class="octicon octicon-link"></span></a>Removing background noise<a class="anchor-link" href="#Removing-background-noise"> </a>
 </h4>
-<p>In order to provide as much meaningful information as possible to the network, any unintended parts of the audio signal need to be filtered out. The recording process injected a certain amount of noise into the samples, which confound the network and therefore should be ideally eliminated. For this task, we tested several common background noise removal approaches for their effectiveness.</p>
-<p>The method of short-term energy for noise cancellation is commonly used for voice detection <sup id="fnref-3" class="footnote-ref"><a href="#fn-3">3</a></sup>. It detects the noisy parts of a signal because they have less energy than the voice parts. The noisy parts can then be removed from the signal.</p>
+<p>In order to provide as much meaningful information as possible to the network, any unintended parts of the audio signal should be filtered out. In our case, the goal was to reduce the background noise injected into the samples during the recording process as much as we could. For this task, we tested several common background noise removal approaches for their effectiveness.</p>
+<p>The method of short-term energy for noise cancellation is commonly used for voice detection <sup id="fnref-3" class="footnote-ref"><a href="#fn-3">3</a></sup>. It detects the noisy parts of a signal because they have less energy than the voice parts. The identified noise can then be removed from the signal.</p>
 <p>For noise cancellation in vibration signals, autocorrelation has been shown to be a useful tool <sup id="fnref-4" class="footnote-ref"><a href="#fn-4">4</a></sup>. The vibration is correlated to itself, however the noise is neither correlated to itself nor the signal. Therefore repeatedly applying the autocorrelation operation to the signal reduces the noise more and more while the vibration is not decreased.</p>
-<p>These two concepts however rely on a priori estimates of the signal, i.e. the signal being a voice or a vibration. Another method, Adaptive Noise Cancellation (ANC), deals with noise without any of these assumptions. ANC is achieved by introducing a canceling antinoise wave through secondary sources. These secondary sources are interconnected through an electronic system using a specific signal processing algorithm for the particular cancellation scheme. To implement ANC,we wrote an algorithm in matlab for a single channel feed-forward active noise control system. We then sent a sequence of training data to estimate the noise before the setup of noise cancellation, and trained the filter with white gaussian noise.</p>
-<p><img src="/Predicting-from-Sound-Blog/images/copied_from_nb/ANC_error.jpg" alt="" title="Figure 5: Calculated error of a feedforward ANC">
-We took one of the longer noisy signals from our  dataset and tried to eliminate the noise with the ANC feedforward method. In figure 5, our target is the error. Here error is original signal subtracted by filtered signal. Our target is to minimize error as much as we can. From figure 1 filter is almost making error zero in  80 iteration then exit the loop ??</p>
-<p>Figure 6 shows the difference between original signal and noise eliminated signal.</p>
-<p><img src="/Predicting-from-Sound-Blog/images/copied_from_nb/ANC_difference.png" alt="" title="Figure 6: Original vs. denoised signal"></p>
-<p>We applied the different denoising techniques, which indeed resulted in less interference for some samples. However due to the big diversity in our dataset the findings were inconsistent. What worked for one kind of signal effected another kind of signal negatively. Because considering each signal individually would be far too costly, we ultimately decided not to deploy any denoising techniques for now and instead let our network deal with the background noise. In future work, dealing with this could lead to accuracy improvements.</p>
+<p>These two concepts however rely on a priori estimates of the signal, e.g. the signal being a voice or a vibration. As our dataset contains lots of very different signals, a priori estimates are impractical for our purposes.</p>
+<p>Another method, Adaptive Noise Cancellation (ANC), deals with noise without any of these assumptions. ANC is achieved by introducing a cancelling anti-noise wave through secondary sources, which is generated by a neural network. These secondary sources are interconnected through an electronic system using a specific signal processing algorithm for the particular cancellation scheme. To implement ANC, we wrote an algorithm in Matlab for a single channel feed-forward active noise control system. We then used a sequence of training data to estimate the noise before this noise cancellation setup, and trained the ANC filter with white gaussian noise.</p>
+<p>For testing our ANC, we took one of the longer noisy signals from our  dataset and tried to eliminate the noise with the ANC feedforward method. 
+Figure 5 shows the difference between original signal and noise eliminated signal.</p>
+<p><img src="/Predicting-from-Sound-Blog/images/copied_from_nb/ANC_difference.png" alt="" title="Figure 5: Original vs. denoised signal"></p>
+<p>Applying this denoising technique indeed resulted in less interference for some samples. However due to the big diversity in our dataset the findings were inconsistent. What worked for one kind of signal effected another kind of signal negatively. Hence we ultimately decided not to deploy any denoising techniques for now and instead let our network deal with the background noise. In future work, handling denoising properly could lead to accuracy improvements.</p>
 
 </div>
 </div>
@@ -297,7 +297,7 @@ We took one of the longer noisy signals from our  dataset and tried to eliminate
 <h3 id="Model-implementation">
 <a class="anchor" href="#Model-implementation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Model implementation<a class="anchor-link" href="#Model-implementation"> </a>
 </h3>
-<p>Due to having two different problem statements, we opted on using two different models.  In this section, we will discuss the two models that were implemented, as well as their performance.</p>
+<p>Due to having two different problem statements, we opted on using two different models, one for classification and the other for distance prediction.  In this section, we will discuss the two models that were implemented as well as their performance.</p>
 
 </div>
 </div>
@@ -309,8 +309,8 @@ We took one of the longer noisy signals from our  dataset and tried to eliminate
 <a class="anchor" href="#Python-framework" aria-hidden="true"><span class="octicon octicon-link"></span></a>Python framework<a class="anchor-link" href="#Python-framework"> </a>
 </h4>
 <p>We are using Keras as the deep learning library to construct our network.</p>
-<p>For audio processing, Librosa is a suitable library. It provides several functions to extract features from audio data, e.g. for creating spectograms, calculating the MFCCs and performing a fourier transform.</p>
-<p>Other libraries, such as SKlearn and pandas, help with the data processing and KFold model fitting.</p>
+<p>For audio processing, Librosa turned out to be a suitable library. It provides several functions to extract features from audio data, e.g. for creating spectograms, calculating the MFCCs and performing a fourier transform.</p>
+<p>Other libraries, such as SKlearn and pandas, helped with the data processing and K-Fold model fitting.</p>
 
 </div>
 </div>
@@ -377,7 +377,7 @@ As a loss function, we used cross entropy, and the Adam optimizer is used for tr
 <a class="anchor" href="#Conclusion-and-future-work" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion and future work<a class="anchor-link" href="#Conclusion-and-future-work"> </a>
 </h2>
 <p>We have created 2 models for two different problem statements - that being audio classification and source distance prediction. For these tasks, we researched multiple to solve these problems, and explain concepts such as CRNN and audio feature extraction. While the results are not great, we believe that the methods we used are intuitive and correct.</p>
-<p>For future work, we would mention the idea of using different kinds of noise cancellation techniques that were researched throughout this project. One of those ideas is called Short-Term autocorellation Method, which capsuls the pitch point of signal.</p>
+<p>For future work, we would mention the idea of using different kinds of noise cancellation techniques that were researched throughout this project. One of those ideas is called Short-Term autocorrellation Method, which capsuls the pitch point of signal.</p>
 
 </div>
 </div>
