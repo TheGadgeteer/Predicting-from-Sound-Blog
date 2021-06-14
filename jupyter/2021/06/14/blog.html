@@ -273,10 +273,10 @@ The spectogram is depicted as a heat map, which means the intensity at a specifi
 <p>The method of short-term energy for noise cancellation is commonly used for voice detection <sup id="fnref-3" class="footnote-ref"><a href="#fn-3">3</a></sup>. It detects the noisy parts of a signal because they have less energy than the voice parts. The noisy parts can then be removed from the signal.</p>
 <p>For noise cancellation in vibration signals, autocorrelation has been shown to be a useful tool <sup id="fnref-4" class="footnote-ref"><a href="#fn-4">4</a></sup>. The vibration is correlated to itself, however the noise is neither correlated to itself nor the signal. Therefore repeatedly applying the autocorrelation operation to the signal reduces the noise more and more while the vibration is not decreased.</p>
 <p>These two concepts however rely on a priori estimates of the signal, i.e. the signal being a voice or a vibration. Another method, Adaptive Noise Cancellation (ANC), deals with noise without any of these assumptions. ANC is achieved by introducing a canceling antinoise wave through secondary sources. These secondary sources are interconnected through an electronic system using a specific signal processing algorithm for the particular cancellation scheme. To implement ANC,we wrote an algorithm in matlab for a single channel feed-forward active noise control system. We then sent a sequence of training data to estimate the noise before the setup of noise cancellation, and trained the filter with white gaussian noise.</p>
-<p><img src="/Predicting-from-Sound-Blog/images/copied_from_nb/ANC_error.jpg" alt="" title="Figure 7: Calculated error of a feedforward ANC">
-We took one of the longer noisy signals from our  dataset and tried to eliminate the noise with the ANC feedforward method. In figure 7, our target is the error. Here error is original signal subtracted by filtered signal. Our target is to minimize error as much as we can. From figure 1 filter is almost making error zero in  80 iteration then exit the loop ??</p>
-<p>Figure 8 shows the difference between original signal and noise eliminated signal.</p>
-<p><img src="/Predicting-from-Sound-Blog/images/copied_from_nb/ANC_difference.png" alt="" title="Figure 8: Original vs. denoised signal"></p>
+<p><img src="/Predicting-from-Sound-Blog/images/copied_from_nb/ANC_error.jpg" alt="" title="Figure 5: Calculated error of a feedforward ANC">
+We took one of the longer noisy signals from our  dataset and tried to eliminate the noise with the ANC feedforward method. In figure 5, our target is the error. Here error is original signal subtracted by filtered signal. Our target is to minimize error as much as we can. From figure 1 filter is almost making error zero in  80 iteration then exit the loop ??</p>
+<p>Figure 6 shows the difference between original signal and noise eliminated signal.</p>
+<p><img src="/Predicting-from-Sound-Blog/images/copied_from_nb/ANC_difference.png" alt="" title="Figure 6: Original vs. denoised signal"></p>
 <p>We applied the different denoising techniques, which indeed resulted in less interference for some samples. However due to the big diversity in our dataset the findings were inconsistent. What worked for one kind of signal effected another kind of signal negatively. Because considering each signal individually would be far too costly, we ultimately decided not to deploy any denoising techniques for now and instead let our network deal with the background noise. In future work, dealing with this could lead to accuracy improvements.</p>
 
 </div>
@@ -354,9 +354,10 @@ This decision was inspired by a popular blog from a kaggle competition called <a
 <p>As we are dealing with a multi-class classification task, commonly used performance metrics for binary classification tasks aren't suitable. For example, the classic F1 score the mean of precision and recall. The precision describes how good the model is at predicting the positive outcome, and the recall quantifies the model's ability to predict positive samples as positive. This however doesn't make sense for predicting multiple classes, as there is no clear positive and negative class.</p>
 <p>The so-called F-Beta metric overcomes this by first calculating prediction and recall for each class in a one vs rest manner, and then averaging them over all the classes. A constant Beta is utilized in order to weigh precision and recall differently. We are using the common choice of two for Beta, which makes recall valued twice as highly as precision. 
 The F-Beta metric is calculated as follows:</p>
-$$
+<p>$
 \text{F-Beta} = \frac{(1 + \text{Beta}^2) \cdot \text{precision} \cdot \text{recall}}{\text{Beta}^2 \cdot \text{precision} + \text{recall}}
-$$<p><img src="/Predicting-from-Sound-Blog/images/copied_from_nb/second_model.png" alt="" title="Figure x"></p>
+$</p>
+<p><img src="/Predicting-from-Sound-Blog/images/copied_from_nb/second_model.png" alt="" title="Figure x"></p>
 <p>The results in the above figure show two graphs, cross entropy loss and F-Beta. This figure explains that it is quite heavily overfitting the data, however, the F-Beta value is close to the ideal, signifying the</p>
 <h4 id="Distance">
 <a class="anchor" href="#Distance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Distance<a class="anchor-link" href="#Distance"> </a>
