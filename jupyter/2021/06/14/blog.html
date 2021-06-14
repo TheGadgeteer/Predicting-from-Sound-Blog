@@ -77,7 +77,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      5 min read
+      6 min read
     
 </span></p>
 
@@ -238,6 +238,12 @@ This process introduced some background noise into the samples, which we were at
 <h4 id="Removing-background-noise">
 <a class="anchor" href="#Removing-background-noise" aria-hidden="true"><span class="octicon octicon-link"></span></a>Removing background noise<a class="anchor-link" href="#Removing-background-noise"> </a>
 </h4>
+<p>In order to provide as much meaningful information as possible to the network, any unintended parts of the audio signal need to be filtered out. The recording process injected a certain amount of noise into the samples, which confound the network and therefore should be reduced as much as possible. We tested several common background noise removal approaches for their effectiveness.</p>
+<p>The method of short-term energy for noise cancellation is commonly used for voice detection <sup id="fnref-3" class="footnote-ref"><a href="#fn-3">3</a></sup>. It detects the noisy parts of a signal because they have less energy than the voice parts. The noisy parts can then be removed from the signal.</p>
+<p>For noise cancellation in vibration signals, autocorrelation has been shown to be a useful tool <sup id="fnref-4" class="footnote-ref"><a href="#fn-4">4</a></sup>. The vibration is correlated to itself, however the noise is neither correlated to itself nor the signal. Therefore repeatedly applying the autocorrelation operation to the signal reduces the noise more and more while the vibration is not decreased.</p>
+<p>These two concept however rely on a priori estimates of the signal, i.e. the signal being a voice or a vibration. A third method, Adaptive Noise Cancellation, deals with noise without any of these assumptions. Instead, it requires a second input signal that contains noise which is correlated with the primary noise from the recording. It then uses this second reference input to subtract the noise from the recording. However providing this second input has shown to be infeasible for our project.</p>
+<p>We applied denoising through autocorrelation and short-term energy, which indeed resulted in less interference, however due to the diversity in our dataset the findings were inconsistent. Because of this, we ultimately decided not to deploy any denoising techniques and instead let our network deal with the background noise.</p>
+
 </div>
 </div>
 </div>
@@ -319,6 +325,10 @@ The simplest way would be to emply the raw PCM data, however using features extr
 <div class="footnotes"><p id="fn-1">1. <a href="https://www.kaggle.com/fizzbuzz/beginner-s-guide-to-audio-data/">https://www.kaggle.com/fizzbuzz/beginner-s-guide-to-audio-data/</a><a href="#fnref-1" class="footnote footnotes">↩</a></p></div> USED?
 <p></p>
 <div class="footnotes"><p id="fn-2">2. <a href="https://arxiv.org/pdf/2003.04210.pdf">https://arxiv.org/pdf/2003.04210.pdf</a><a href="#fnref-2" class="footnote footnotes">↩</a></p></div>
+<p></p>
+<div class="footnotes"><p id="fn-3">3. <a href="https://www.researchgate.net/publication/263354982_A_Hierarchical_Framework_Approach_for_Voice_Activity_Detection_and_Speech_Enhancement">https://www.researchgate.net/publication/263354982_A_Hierarchical_Framework_Approach_for_Voice_Activity_Detection_and_Speech_Enhancement</a><a href="#fnref-3" class="footnote footnotes">↩</a></p></div>
+<p></p>
+<div class="footnotes"><p id="fn-4">4. <a href="https://www.sciencedirect.com/science/article/pii/S2590123020300426">https://www.sciencedirect.com/science/article/pii/S2590123020300426</a><a href="#fnref-4" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
