@@ -1,0 +1,6 @@
+These are the code files for our neural networks project "Predicting from sound". 
+
+Classification1.ipynb contains our initial model for the classification task
+Classification2.ipynb is the improved classification model
+
+DistancePrediction.ipynb is our distance prediction model 
