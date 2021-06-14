@@ -355,9 +355,6 @@ This decision was inspired by a popular blog from a kaggle competition called <a
 <p>The so-called F-Beta metric overcomes this by first calculating prediction and recall for each class in a one vs rest manner, and then averaging them over all the classes. A constant Beta is utilized in order to weigh precision and recall differently. We are using the common choice of two for Beta, which makes recall valued twice as highly as precision. 
 The F-Beta metric is calculated as follows:</p>
 <p>F-Beta = (1 + Beta^2) x (precision x recall) / (Beta^2 x precision + recall)</p>
-<p>$
-\text{F-Beta} = \frac{(1 + \text{Beta}^2) \cdot \text{precision} \cdot \text{recall}}{\text{Beta}^2 \cdot \text{precision} + \text{recall}}
-$</p>
 <p><img src="/Predicting-from-Sound-Blog/images/copied_from_nb/second_model.png" alt="" title="Figure x"></p>
 <p>The results in the above figure show two graphs, cross entropy loss and F-Beta. This figure explains that it is quite heavily overfitting the data, however, the F-Beta value is close to the ideal, signifying the</p>
 <h4 id="Distance">
